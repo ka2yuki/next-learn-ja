@@ -21,7 +21,7 @@ body {
     /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
 }
 
-.notion {
+.note {
     position: fixed;
     top: 0;
     left: 0;
@@ -30,6 +30,19 @@ body {
     text-align: center;
     background-color: #020617;
     color: white;
+}
+
+.note small {
+    margin-left: .2rem;
+    font-size: .5rem;
+}
+
+.note a i {
+    padding-left: 1rem;
+}
+
+.note a {
+    color: aliceblue;
 }
 
 button {
