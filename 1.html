@@ -10,6 +10,8 @@
     <title>next-learn-ja | 1</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/14e7d786cb.js" crossorigin="anonymous"></script>
+    <!-- Prism.jsのCSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -18,10 +20,101 @@
             href="https://github.com/ka2yuki/next-learn-ja"><i class="fa-brands fa-github"></i></a></div>
     <!-- End: note area -->
 
-    <h1>page 2</h1>
+
+    <h2>新規プロジェクトを作成する</h2>
+    <p>パッケージマネージャーは<a
+            href="https://pnpm.io/">pnpm</a>をお勧めします。`npm`や`yarn`よりも早くより効率的です。もし`pnpm`をインストールされていない場合次のコマンドを実行することでインストールできます:
+    </p>
+    <code>npm install -g pnpm</code>
+
+
+    <p>Next.jsアプリを作成する為にターミナルを開きプロジェクトを保存したいフォルダへ`cd`にて移動します。そして次のコマンドを実行します：</p>
+    <code>npx create-next-app@latest nextjs-dashboard --example "https://github.com/vercel/next-learn/tree/main/dashboard/starter-example" --use-pnpm</code>
+    <p>このコマンドは<a
+            href="https://nextjs.org/docs/app/api-reference/create-next-app">create-next-app</a>をしようします。CLI：コマンドラインインターフェイスはNext.jsアプリをセットアップしてくれます。上記のコマンド内ではこのコースの為に<a
+            href="https://github.com/vercel/next-learn/tree/main/dashboard/starter-example">starter
+            example</a>と共に`--example`フラグも使用しています。
+    </p>
+
+
+    <h2>プロジェクト内確認</h2>
+    <p>スクラッチでコーディングするようなチュートリアルではありません。こちらのコースのほとんどコードは既に記述されています。これは実際の開発現場をよく反映しています。既存のコードがある状態から働くような感じです。</p>
+    <p>ゴールはNext.jsのメイン機能を学ぶことに集中することです。全てのアプリケーションコードを書くことなく。</p>
+    <p>インストール後コードエディタでプロジェクトを開き`nextjs-dashboard`へ移動します。</p>
+    <code>cd nextjs-dashboard</code>
+    <p>少し時間をかけてプロジェクトを探索してみましょう。</p>
+
+    <h3>フォルダー構造</h3>
+    <p>プロジェクトは次のフォルダ構造なことに気づきます：</p>
+    <img src="https://nextjs.org/_next/image?url=%2Flearn%2Flight%2Flearn-folder-structure.png&w=1920&q=75"
+        alt="folder structure image" width="100%">
+    <ul>
+        <li><code>/app</code>: アプリへの全てのルーティング・コンポーネント・ロジックを含みます。これはここから主に働くことになります。</li>
+        <li><code>/app/lib</code>: アプリで使用される関数が含まれます。再利用可能な便利な関数やデータ取得の関数の様な。</li>
+        <li><code>/app/ui</code>: アプリの全てのUIコンポーネントが含まれます。カード・テーブル・フォームの様な。時間を節約するために、これらのコンポーネントは事前にスタイリングされます。</li>
+        <li><code>public</code>: 画像のような全ての静的なアセットが含まれます。</li>
+        <li><b>Config Files</b>:
+            アプリrootに<code>next.config.js</code>の様な設定ファイルに気づくはずです。これらの殆どのファイルは<code>create-next-app</code>を使用して新しいプロジェクトを始める際に事前設定されて作成されます。このコースを修正する必要はありません。
+        </li>
+    </ul>
+    <p>気軽にこれらのフォルダーを探索できます。すべてのコードがしている事をまだ理解していない場合でも心配しないでください。</p>
+
+    <h3>仮のデータ</h3>
+    <p>UI構築の際にいくつか仮のデータがあると便利です。もしデータベースやAPIがまだ利用可能でない場合：</p>
+    <ul>
+        <li>JSON形式もしくはJavaScriptオブジェクト内で仮データを使う</li>
+        <li><a href="https://mockapi.io/">mock API</a>の様なサードパーティサービスを使用する</li>
+    </ul>
+    <p>このプロジェクトの為に<code>app/lib/placeholder-data.ts</code>内でいくつかの仮データを提供されています。各ファイル内のJavaScript
+        objectはデータベースのテーブルで表されます。たとえば請求書テーブルの場合：
+    </p>
+    <pre><code class="language-javascript">
+const invoices = [
+    {
+        customer_id: customers[0].id,
+        amount: 15795,
+        status: 'pending',
+        date: '2022-12-06',
+    },
+    {
+        customer_id: customers[1].id,
+        amount: 20348,
+        status: 'pending',
+        date: '2022-11-14',
+    },
+    // ...
+];
+    </code></pre>
+    <p>この章で<a
+            href="https://nextjs.org/learn/dashboard-app/setting-up-your-database">データベースをセットアップ</a>してデータをデータベースに与え使用します。
+    </p>
+
+    <h3>TypeScript</h3>
+    <p>殆んどのファイルは<code>.ts</code>もしくは<code>.tsx</code>の接尾詞に気づくかもしれません。何故ならこれはTypeScriptで書かれたプロジェクトだからです。現代のWebの傾向を反映したコースを作成したかったからです。
+    </p>
+    <p>もしTypeScriptを知らなくても大丈夫です。- 必要に応じてTypeScriptコードスニペットを提供します。</p>
+    <p><code>/app/lib/definitions.ts</code>を見てみましょう。ここでは手動で型定義をします。これはデータベースから返却されます。たとえば請求書テーブルは次の型があります。</p>
+    <pre><code class="language-javascript">
+export type Invoice = {
+  id: string;
+  customer_id: string;
+  amount: number;
+  date: string;
+  // In TypeScript, this is called a string union type.
+  // It means that the "status" property can only be one of the two strings: 'pending' or 'paid'.
+  status: 'pending' | 'paid';
+};
+    </code></pre>
+    <p>TypeScriptを使うことによってコンポーネントもしくはデータベースに対して誤ったデータを間違って渡さない事を確実にすることができます。請求金額に対して<code>number</code>型の代わりに<code>string</code>型を渡すような。
+    </p>
+
+
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6623379183106626"
         crossorigin="anonymous"></script>
+    <!-- Prism.jsのJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
 </body>
 
 </html>
